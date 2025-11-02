@@ -12,7 +12,7 @@
 
 #include "ft_libprintf.h"
 
-int	ft_puthex(unsigned long n, char *f)
+int	ft_puthex(unsigned int n, char *f)
 {
 	long	x;
 	int		z;

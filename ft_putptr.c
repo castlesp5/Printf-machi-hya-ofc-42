@@ -12,6 +12,19 @@
 
 #include "ft_libprintf.h"
 
+int	ft_puthex2(unsigned long n, char *f)
+{
+	long	x;
+	int		z;
+
+	z = 0;
+	if (n >= 16)
+		z += ft_puthex2(n / 16, f);
+	x = (n % 16);
+	z += write(1, &f[x], 1);
+	return (z);
+}
+
 int	ft_putptr(void *ptr)
 {
 	unsigned long	p;
@@ -24,6 +37,6 @@ int	ft_putptr(void *ptr)
 	}
 	p = (unsigned long)ptr;
 	write(1, "0x", 2);
-	z = ft_puthex(p, "0123456789abcdef");
+	z = ft_puthex2(p, "0123456789abcdef");
 	return (z + 2);
 }

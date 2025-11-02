@@ -27,9 +27,9 @@ static int	ft_format(va_list lst, char c)
 	else if (c == 'u')
 		z += ft_putuns(va_arg(lst, unsigned int));
 	else if (c == 'x')
-		z += ft_puthex(va_arg(lst, int), "0123456789abcdef");
+		z += ft_puthex(va_arg(lst, unsigned int), "0123456789abcdef");
 	else if (c == 'X')
-		z += ft_puthex(va_arg(lst, int), "0123456789ABCDEF");
+		z += ft_puthex(va_arg(lst, unsigned int), "0123456789ABCDEF");
 	else if (c == 'p')
 		z += ft_putptr(va_arg(lst, void *));
 	else
@@ -43,6 +43,8 @@ int	ft_printf(char *str, ...)
 	int		i;
 	int		z;
 
+	if (!str)
+		return (-1);
 	va_start(lst, str);
 	i = 0;
 	z = 0;
@@ -50,15 +52,12 @@ int	ft_printf(char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			i++;
-			z += ft_format(lst, str[i]);
-			i++;
+			z += ft_format(lst, str[++i]);
+			if (str[i])
+				i++;
 		}
 		else
-		{
-			write(1, &str[i++], 1);
-			z += 1;
-		}
+			z += write(1, &str[i++], 1);
 	}
 	va_end(lst);
 	return (z);
